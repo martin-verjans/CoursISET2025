@@ -10,7 +10,7 @@ namespace Debug_Example
 
         public DebugExampleForm()
         {
-            Debug.AutoFlush = true;
+                        Debug.AutoFlush = true;
             InitializeComponent();
             SetupListBoxTraceListener();
         }
@@ -25,13 +25,38 @@ namespace Debug_Example
 
         private void btnAssertSuccess_Click(object sender, EventArgs e)
         {
+            System.Threading.Thread.CurrentThread.Name = "test";
+            string threadName = System.Threading.Thread.CurrentThread.Name;
+            int threadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
+            int i = 0;
+            i = 5;
+            TestI(i);
+            i = 42;
+
+
             Debug.Write("Testing assertion");
             Debug.Assert(true, "Assert successfull", "More details");
             Debug.WriteLine("Assertion has been tested");
         }
 
+        private void TestI(int i)
+        {
+            i = 4;
+            test2();
+            i = 3;
+            i = 6;
+        }
+
+        void test2()
+        {
+            int v = 0;
+            v = 2;
+        }
+
         private void btnAssertFail_Click(object sender, EventArgs e)
         {
+            Debug.Assert(false, "Assert failed");
             Debug.Fail("This assertion always fails", "Some details here");
         }
 
